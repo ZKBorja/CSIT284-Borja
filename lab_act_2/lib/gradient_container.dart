@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'styled_text.dart';
+import 'package:lab_act_2/dice_roller.dart';
+
 
 class GradientContainer extends StatelessWidget{
-  const GradientContainer({super.key});
+  const GradientContainer(this.colors, {super.key});
+    final List<Color> colors;
+
+    
+
   @override
   Widget build(context){
   return Container(
@@ -16,8 +21,8 @@ class GradientContainer extends StatelessWidget{
               ])
             ),
           child: Center(
-            child: StyledText('Borja'),
-          ),
-        );
+            child: DiceRoller()
+        ),
+    );
   }
 }

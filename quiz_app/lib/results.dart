@@ -39,52 +39,66 @@ class ResultsScreen extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Container(
-        margin: const EdgeInsets.all(40),
+        margin: const EdgeInsets.all(35),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'You answered $numCorrectQuestions out of $numTotalQuestions questions correctly!',
+              'Quiz Completed!',
               style: const TextStyle(
-                color: Color.fromARGB(255, 230, 200, 253),
-                fontSize: 20,
+                color: Color.fromARGB(255, 148, 163, 184),
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'You scored $numCorrectQuestions / $numTotalQuestions correctly',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 25),
             SizedBox(
-              height: 400,
+              height: 380,
               child: SingleChildScrollView(
                 child: Column(
                   children: summaryData.map((data) {
                     final isCorrect =
                         data['user_answer'] == data['correct_answer'];
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 14),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(90, 30, 41, 59),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: 30,
-                            height: 30,
+                            width: 28,
+                            height: 28,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: isCorrect
-                                  ? const Color.fromARGB(255, 150, 198, 241)
-                                  : const Color.fromARGB(255, 249, 92, 198),
+                                  ? const Color.fromARGB(255, 52, 211, 153)
+                                  : const Color.fromARGB(255, 248, 113, 113),
                               shape: BoxShape.circle,
                             ),
                             child: Text(
                               ((data['question_index'] as int) + 1).toString(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 22, 2, 56),
+                                color: Color.fromARGB(255, 15, 23, 42),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 15),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,23 +107,28 @@ class ResultsScreen extends StatelessWidget {
                                   data['question'] as String,
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 5),
+                                const SizedBox(height: 4),
                                 Text(
                                   data['user_answer'] as String,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 202, 171, 252),
+                                  style: TextStyle(
+                                    color: isCorrect
+                                        ? const Color.fromARGB(255, 52, 211, 153)
+                                        : const Color.fromARGB(255, 248, 113, 113),
+                                    fontSize: 13,
                                   ),
                                 ),
-                                Text(
-                                  data['correct_answer'] as String,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 181, 254, 246),
+                                if (!isCorrect)
+                                  Text(
+                                    data['correct_answer'] as String,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 52, 211, 153),
+                                      fontSize: 13,
+                                    ),
                                   ),
-                                ),
                               ],
                             ),
                           ),
@@ -120,14 +139,19 @@ class ResultsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
-            TextButton.icon(
+            const SizedBox(height: 25),
+            ElevatedButton.icon(
               onPressed: onRestart,
-              style: TextButton.styleFrom(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 14, 116, 144),
                 foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
               ),
-              icon: const Icon(Icons.refresh),
-              label: const Text('Restart Quiz!'),
+              icon: const Icon(Icons.replay_rounded),
+              label: const Text('Restart Quiz'),
             ),
           ],
         ),

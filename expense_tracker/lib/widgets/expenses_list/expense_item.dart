@@ -12,31 +12,56 @@ class ExpenseItem extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 16,
+          horizontal: 16,
+          vertical: 14,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(
-              expense.title,
-              style: Theme.of(context).textTheme.titleLarge,
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                categoryIcons[expense.category],
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
             ),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                Text(
-                  '\$${expense.amount.toStringAsFixed(2)}',
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    Icon(categoryIcons[expense.category]),
-                    const SizedBox(width: 8),
-                    Text(expense.formattedDate),
-                  ],
-                ),
-              ],
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    expense.title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: 16,
+                        ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    expense.formattedDate,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              '\$${expense.amount.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ],
         ),

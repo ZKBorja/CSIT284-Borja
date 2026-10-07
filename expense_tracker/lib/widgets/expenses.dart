@@ -4,6 +4,7 @@ import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/chart/chart.dart';
+import 'package:expense_tracker/widgets/spending_summary.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -83,6 +84,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -129,47 +132,33 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: Theme.of(context).colorScheme.primaryContainer,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.account_balance_wallet,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+      body: width < 600
+          ? Column(
+              children: [
+                SpendingSummary(totalAmount: _totalSpending),
+                Chart(expenses: _registeredExpenses),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      SpendingSummary(totalAmount: _totalSpending),
+                      Expanded(
+                        child: Chart(expenses: _registeredExpenses),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Total Spent:',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '\$${_totalSpending.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
             ),
-          ),
-          Chart(expenses: _registeredExpenses),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
     );
   }
 }

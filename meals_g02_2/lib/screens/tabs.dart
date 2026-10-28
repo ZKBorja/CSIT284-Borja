@@ -6,7 +6,7 @@ import 'package:meals_g02_2/screens/filters.dart';
 import 'package:meals_g02_2/screens/meals.dart';
 import 'package:meals_g02_2/widgets/main_drawer.dart';
 import 'package:meals_g02_2/providers/meals_provider.dart';
-
+import 'package:meals_g02_2/providers/favorite_meals_provider.dart';
 const kInitialFilters = {
   Filter.glutenFree: false,
   Filter.lactoseFree: false,
@@ -96,15 +96,15 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }).toList();
 
     Widget activePage = CategoriesScreen(
-      onToggleFavorite: _toggleMealFavoriteStatus,
+      
       availableMeals: availableMeals,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
       activePage = MealsScreen(
-        meals: _favoriteMeals,
-        onToggleFavorite: _toggleMealFavoriteStatus,
+        meals: ref.watch(favoriteMealsProvider),
+        
       );
       activePageTitle = 'Your Favorites';
     }

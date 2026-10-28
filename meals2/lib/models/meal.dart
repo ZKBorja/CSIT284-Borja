@@ -40,4 +40,8 @@ class Meal {
   final bool isLactoseFree;
   final bool isVegan;
   final bool isVegetarian;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 87e068f3ddc5377db3d659c590b015f7b3bf7f6b
